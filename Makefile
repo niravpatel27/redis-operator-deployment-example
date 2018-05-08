@@ -1,4 +1,4 @@
-.PHONY: deploy-operator clean provision-redis
+.PHONY: deploy-operator clean provision-redis apply
 
 DIST_ROOT=dist
 KUBE_INSTALL := $(shell command -v kubectl 2> /dev/null)
@@ -29,3 +29,6 @@ deploy-operator: check
 
 provision-redis:
 	kubectl create -f ./redisfailover.yaml
+
+apply:
+	kubectl apply -f ./redisfailover.yaml	

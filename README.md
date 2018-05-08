@@ -3,6 +3,15 @@
 ## Requirements
 * Kubernetes 1.8+
 
+## Minikube
+ 
+ * [Install](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+
+```
+# start
+$ minikube start --memory 4096 --cpus 4 --mount
+```
+
 ## Deploy Redis Operator 
 
 ```
@@ -50,13 +59,11 @@ $ make clean
 
 ## Troubleshooting
 
-#### Problem
-```
-Error: release redisfailover failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
-```
-#### Solution
 
 ```
+Error: release redisfailover failed: namespaces "default" is forbidden: User "system:serviceaccount:kube-system:default" cannot get namespaces in the namespace "default"
+
+# solution
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'      
